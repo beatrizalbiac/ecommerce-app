@@ -45,49 +45,8 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], session: S
 async def user(user: UserDep):
     return user
 
-# THINGS TO ADD IF THERE'S EXTRA TIME
+# THINGS TO ADD IF THERE'S EXTRA TIME:
 
 # ERASE USER
 
 # UPDATE USER
-
-# @router.get("/users/", response_model=list[UserPublic])
-# def read_users(
-#     session: SessionDep,
-#     offset: int = 0,
-#     limit: Annotated[int, Query(le=100)] = 100,
-# ):
-#     users = session.exec(select(User).offset(offset).limit(limit)).all()
-#     logger.info(f"Retrieved users: {users}")
-#     return users
-
-
-# @router.get("/users/{user_id}", response_model=UserPublic)
-# def read_user(user_id: int, session: SessionDep):
-#     user = session.get(User, user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User not found")
-#     return user
-
-
-# @router.patch("/users/{user_id}", response_model=UserPublic)
-# def update_user(user_id: int, user: UserUpdate, session: SessionDep):
-#     user_db = session.get(User, user_id)
-#     if not user_db:
-#         raise HTTPException(status_code=404, detail="User not found")
-#     user_data = user.model_dump(exclude_unset=True)
-#     user_db.sqlmodel_update(user_data)
-#     session.add(user_db)
-#     session.commit()
-#     session.refresh(user_db)
-#     return user_db
-
-
-# @router.delete("/users/{user_id}")
-# def delete_user(user_id: int, session: SessionDep):
-#     user = session.get(User, user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User not found")
-#     session.delete(user)
-#     session.commit()
-#     return {"ok": True}

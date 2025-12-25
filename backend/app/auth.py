@@ -12,7 +12,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 SECRET_KEY = "2630e37492f20fccc39da307f2a9a4904c0dca842103887e91dfc0bc93981504"
 ALGORITHM = "HS256"
-# TOKEN_EXPIRED = 30
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
