@@ -1,15 +1,12 @@
 
 import logging
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, select
-from app.models.users import User, UserCreate, UserPublic
-# , UserUpdate
+from app.models.users import User, UserCreate, UserPublic, UserLogin, Token
 from app.dependencies import SessionDep
 import time
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from app.auth import get_password_hash, authenticate_user, create_access_token
 
 router = APIRouter()
 
@@ -17,16 +14,15 @@ logger = logging.getLogger("uvicorn")
 
 
 @router.post("/auth/register", response_model=UserPublic)
-def create_user(user: UserCreate, session: SessionDep):
-    # Hash the password
-    hashed_password = pwd_context.hash(user.password)
+def register(user: UserCreate, session: SessionDep):
+
+    # CONSIDER CHECKING FOR DUPED EMAILS
     
-    # Create User object with hashed password
     db_user = User(
         name=user.name,
         lastname=user.lastname,
         email=user.email,
-        password=hashed_password,
+        password=get_password_hash(user.password),
         is_admin=False
     )
     
@@ -34,6 +30,16 @@ def create_user(user: UserCreate, session: SessionDep):
     session.commit()
     session.refresh(db_user)
     return db_user
+
+@router.post("/auth/login", response_model=Token)
+async def login(form_data: UserLogin, session: SessionDep):
+    user = authenticate_user(form_data.email, form_data.password, session)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate user")
+    
+    token = create_access_token(user.email, user.id)
+
+    return {"access_token": token, "token_type": "bearer"}
 
 
 # @router.get("/users/", response_model=list[UserPublic])

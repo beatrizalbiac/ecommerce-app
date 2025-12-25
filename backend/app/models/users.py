@@ -19,8 +19,13 @@ class UserPublic(UserBase):
 class UserCreate(UserBase):
     password: str
 
+class UserLogin(SQLModel):
+    email: EmailStr
+    password: str
 
-# class UserUpdate(SQLModel):
-#     name: str | None = None
-#     age: int | None = None
-#     secret_name: str | None = None
+class Token(SQLModel):
+    access_token: str
+    token_type: str
+
+class TokenData(SQLModel):
+    email: str | None = None
