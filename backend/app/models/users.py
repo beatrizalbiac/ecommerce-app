@@ -19,13 +19,15 @@ class UserPublic(UserBase):
 class UserCreate(UserBase):
     password: str
 
-class UserLogin(SQLModel):
-    email: EmailStr
-    password: str
+# unused
+# class UserLogin(SQLModel):
+#     email: EmailStr
+#     password: str
 
 class Token(SQLModel):
     access_token: str
     token_type: str
 
-class TokenData(SQLModel):
-    email: str | None = None
+# unused
+# class TokenData(SQLModel):
+#     email: str | None = None

@@ -2,10 +2,10 @@
 import logging
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlmodel import Session, select
-from app.models.users import User, UserCreate, UserPublic, UserLogin, Token
-from app.dependencies import SessionDep
-import time
+# from sqlmodel import Session, select
+from app.models.users import User, UserCreate, UserPublic, Token
+from app.dependencies import SessionDep, UserDep
+from fastapi.security import OAuth2PasswordRequestForm
 from app.auth import get_password_hash, authenticate_user, create_access_token
 
 router = APIRouter()
@@ -32,8 +32,8 @@ def register(user: UserCreate, session: SessionDep):
     return db_user
 
 @router.post("/auth/login", response_model=Token)
-async def login(form_data: UserLogin, session: SessionDep):
-    user = authenticate_user(form_data.email, form_data.password, session)
+def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], session: SessionDep):
+    user = authenticate_user(form_data.username, form_data.password, session) # it will show as "username" but there goes the email
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate user")
     
@@ -41,6 +41,15 @@ async def login(form_data: UserLogin, session: SessionDep):
 
     return {"access_token": token, "token_type": "bearer"}
 
+@router.get("/auth/me", response_model=UserPublic)
+async def user(user: UserDep):
+    return user
+
+# THINGS TO ADD IF THERE'S EXTRA TIME
+
+# ERASE USER
+
+# UPDATE USER
 
 # @router.get("/users/", response_model=list[UserPublic])
 # def read_users(
