@@ -23,6 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/health", tags=["health"])
+def health_check():
+    return {"status": "ok"}
+
 # Register API routers.
 app.include_router(products.router)
 app.include_router(users.router)
