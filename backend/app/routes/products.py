@@ -7,7 +7,7 @@ from fastapi import Depends, HTTPException, status
 router = APIRouter()
 
 @router.get("/products", response_model=list[ProductPublic])
-async def returnall(product: Product, session: SessionDep, 
+async def browse_search(product: Product, session: SessionDep, 
                     q: str|None = None,
                     page: int = Query(default=1, ge=1), # the page number
                     shown: int = Query(default=9, ge=1, le=100)): # products shown per page´
@@ -16,7 +16,8 @@ async def returnall(product: Product, session: SessionDep,
     query = select(product)
 
     if q:
-        query = query.where(Product.title.contains(q))
+        query = query.where((Product.title.contains(q)) | (Product.description.contains(q))) # so it searches for not only the title but also potential key-words found on the description
+
     query = query.offset(skip).limit(shown)
 
     products = session.exec(query).all()
