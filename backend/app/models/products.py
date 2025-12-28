@@ -1,5 +1,8 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+from typing import TYPE_CHECKING, List
 from datetime import datetime, timezone, timedelta
+if TYPE_CHECKING:
+    from .order_items import OrderItem
 
 class ProductBase(SQLModel):
     title: str = Field(index=True)
@@ -13,6 +16,7 @@ class Product(ProductBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc) + timedelta(hours=1)) # utc+1 to keep consistency w user's created_at
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc) + timedelta(hours=1))
+    order_items: List["OrderItem"] = Relationship(back_populates="product")
 
 class ProductPublic(ProductBase):
     id: int

@@ -37,10 +37,10 @@ async def browse_search(session: SessionDep,
 
 # TIENE QUE IR AL FINAL
 # tendrá sentido solo cuando se implemente el frontend
-@router.get("/product/{slug}", response_model=ProductPublic)
+@router.get("/products/{slug}", response_model=ProductPublic)
 def getdetails(product:Product, session:SessionDep, slug: str):
-    slug = select(product).where(product.slug == slug)
-    product = session.exec(slug).first()
+    statement = select(Product).where(Product.slug == slug)
+    product = session.exec(statement).first()
 
     if not product:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Prouct not found")

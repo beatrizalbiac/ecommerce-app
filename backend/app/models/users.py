@@ -1,7 +1,9 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+from typing import TYPE_CHECKING, List
 from pydantic import EmailStr
 from datetime import datetime, timezone, timedelta
-
+if TYPE_CHECKING:
+    from .orders import Order
 
 class UserBase(SQLModel):
     name: str = Field(index=True)
@@ -13,6 +15,7 @@ class User(UserBase, table=True):
     password: str
     is_admin: bool = Field(default=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc) + timedelta(hours=1)) # to make it UTC+1 (The spanish time)
+    orders: List["Order"] = Relationship(back_populates="user")
 
 class UserPublic(UserBase):
     id: int

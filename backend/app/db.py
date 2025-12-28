@@ -1,6 +1,8 @@
 from sqlmodel import Session, SQLModel, create_engine
 from pathlib import Path
 
+from app.models import order_items
+
 BASE_DIR = Path(__file__).resolve().parent
 sqlite_file_path = BASE_DIR / "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_path}"
@@ -10,7 +12,7 @@ engine = create_engine(sqlite_url, connect_args=connect_args)
 
 
 def create_db_and_tables():
-    from app.models import users, products
+    from app.models import users, products, orders, order_items
     SQLModel.metadata.create_all(engine)
 
 
