@@ -1,3 +1,5 @@
+# to separate the main funcionalities from the routes
+
 from sqlmodel import Session, select
 from fastapi import HTTPException, status
 from app.models.products import Product
@@ -16,7 +18,8 @@ def check_stock (product: Product, quantity: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Product unavailable")
     elif product.stock < quantity:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Only {product.stock} available")
-    
+
+# just to add stock, not to substract as it does that when each product is ordered 
 def update_stock(product: Product, quantity: int, session: Session):
     stock = product.stock + quantity
 
