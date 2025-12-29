@@ -71,7 +71,7 @@ def user_all_orders(user: UserDep, session: SessionDep):
     return orders
 
 @router.get("/orders/{order_id}", response_model=OrderwItems)
-def get_order(id: int, user: UserDep, session: SessionDep):
+def get_order(order_id: int, user: UserDep, session: SessionDep):
     order = session.get(Order, id)
 
     if not order:

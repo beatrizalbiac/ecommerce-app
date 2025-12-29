@@ -37,7 +37,7 @@ async def browse_search(session: SessionDep,
 # TIENE QUE IR AL FINAL
 # tendrá sentido solo cuando se implemente el frontend
 @router.get("/products/{slug}", response_model=ProductPublic)
-def getdetails(product:Product, session:SessionDep, slug: str):
+def getdetails(session:SessionDep, slug: str):
     statement = select(Product).where(Product.slug == slug)
     product = session.exec(statement).first()
 

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .db import create_db_and_tables
-from .routes import products, users, orders
+from .routes import products, users, orders, checkout
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -29,3 +29,4 @@ def health_check():
 app.include_router(products.router)
 app.include_router(users.router)
 app.include_router(orders.router)
+app.include_router(checkout.router)
