@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from enum import Enum
 if TYPE_CHECKING:
     from .users import User
-    from .order_items import OrderItem
+    from .order_items import OrderItem, OrderItemPublic
 
 from .order_items import OrderItemPublic, OrderItemCreate
 
@@ -31,7 +31,7 @@ class OrderPublic(OrderBase):
     created_at: datetime
 
 class OrderwItems(OrderPublic):
-    items: List["OrderItem"]
+    items: List[OrderItemPublic]
 
 class OrderCreate(SQLModel):
     items: List[OrderItemCreate] = Field(min_length=1)

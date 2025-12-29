@@ -12,11 +12,16 @@ def create_order(order: OrderCreate, session: SessionDep, user: UserDep):
     if not order.items:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Order has no items")
     
+    # just a double check so each product ordered only appears once, and it isn't separated in the instances it was added or smth
+    ids = [i.product_id for i in order.items]
+    if len(ids) != len(set(ids)):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Product duplicated")
+    
     data = [] # the data of the items in the order
     cents = 0
     update = [] # the products to update after
 
-    for i in order.data:
+    for i in order.items:
         product = product_exists(i.product_id, session)
         check_stock(product, i.quantity)
 
@@ -25,17 +30,17 @@ def create_order(order: OrderCreate, session: SessionDep, user: UserDep):
 
         data.append({
             "product_id": product.id,
-            "total_price": product.price_cents,
+            "unit_price_cents": product.price_cents,
             "quantity": i.quantity
         })
 
-        update.append(product, i.quantity)
+        update.append((product, i.quantity))
 
     new = Order(
         user_id=user.id,
         status=Status.PENDING,
         total_cents=cents
-        # currency="EUR"
+        # currency="EUR" # it's already default
     )
     session.add(new)
     session.flush() # so it doesn't commit it and we still can make rollback if anything goes wrong
