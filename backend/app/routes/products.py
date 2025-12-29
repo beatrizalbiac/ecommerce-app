@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, HTTPException, status
 from sqlmodel import select
 from app.models.products import Product, ProductPublic
 from app.dependencies import SessionDep
-from fastapi import Depends, HTTPException, status
 from typing import Literal
 
 router = APIRouter()
@@ -43,6 +42,6 @@ def getdetails(product:Product, session:SessionDep, slug: str):
     product = session.exec(statement).first()
 
     if not product:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Prouct not found")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Product not found")
     
     return product

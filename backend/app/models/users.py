@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 class UserBase(SQLModel):
     name: str = Field(index=True)
     lastname: str = Field(index=True)
-    email: EmailStr = Field(index=True) 
+    email: EmailStr = Field(unique=True, index=True) # w unique it checks 4 me if it's dupped, but the error is ugly and out of my control
 
 class User(UserBase, table=True):
     id: int | None = Field(default=None, primary_key=True)

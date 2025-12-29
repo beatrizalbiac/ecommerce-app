@@ -2,9 +2,9 @@
 
 from sqlmodel import Session, select
 from app.db import engine
-# from app.models.users import User
-# from app.models.orders import Order
-# from app.models.order_items import OrderItem
+from app.models.users import User
+from app.models.orders import Order
+from app.models.order_items import OrderItem
 from app.models.products import Product
 
 def sample_products():

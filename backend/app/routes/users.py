@@ -2,7 +2,7 @@
 import logging
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-# from sqlmodel import Session, select
+from sqlmodel import Session, select
 from app.models.users import User, UserCreate, UserPublic, Token
 from app.dependencies import SessionDep, UserDep
 from fastapi.security import OAuth2PasswordRequestForm
@@ -16,7 +16,11 @@ logger = logging.getLogger("uvicorn")
 @router.post("/auth/register", response_model=UserPublic)
 def register(user: UserCreate, session: SessionDep):
 
-    # CONSIDER CHECKING FOR DUPED EMAILS
+    # if it were a real web, It should check wether the emails exist or not, but as i'm not using google's API nor anything alike there's no need to :)
+    # but then still have to check if the email is dupped
+    exists = session.exec(select(User).where(User.email == user.email)).first()
+    if exists:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
     
     db_user = User(
         name=user.name,

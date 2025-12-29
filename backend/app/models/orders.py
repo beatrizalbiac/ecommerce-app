@@ -6,6 +6,8 @@ if TYPE_CHECKING:
     from .users import User
     from .order_items import OrderItem
 
+from .order_items import OrderItemPublic, OrderItemCreate
+
 class Status(str, Enum):
     PENDING = "pending"
     PAID = "paid"
@@ -24,3 +26,12 @@ class Order(OrderBase, table=True):
     user: Optional["User"] = Relationship(back_populates="orders") # it doesn't work with User | None bc this is part of SQLAlchemy, which is older than SQLModel, and doesn't get "newer" ways or smth
     items: List["OrderItem"] = Relationship(back_populates="order")
     
+class OrderPublic(OrderBase):
+    id: int
+    created_at: datetime
+
+class OrderwItems(OrderPublic):
+    items: List["OrderItem"]
+
+class OrderCreate(SQLModel):
+    items: List[OrderItemCreate] = Field(min_length=1)

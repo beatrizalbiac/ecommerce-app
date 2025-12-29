@@ -14,3 +14,10 @@ class OrderItem(OrderItemBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     order: Optional["Order"] = Relationship(back_populates="items")
     product: Optional["Product"] = Relationship(back_populates="order_items")
+
+class OrderItemPublic(OrderItemBase):
+    id: int
+
+class OrderItemCreate(SQLModel):
+    product_id: int
+    quantity: int = Field(ge=1)
