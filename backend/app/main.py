@@ -15,7 +15,7 @@ app = FastAPI(lifespan=lifespan)
 # Configure CORS policy.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http//url bla bla"], # LO QUE HAY QUE CAMBIAR PARA CONECTARLO CON EL FRONTEND
+    allow_origins=["http://localhost:5173"], # LO QUE HAY QUE CAMBIAR PARA CONECTARLO CON EL FRONTEND
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

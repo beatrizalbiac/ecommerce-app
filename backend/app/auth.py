@@ -7,10 +7,14 @@ from passlib.context import CryptContext
 from sqlmodel import Session, select
 from app.models.users import User
 from app.db import get_session
+import os
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = "2630e37492f20fccc39da307f2a9a4904c0dca842103887e91dfc0bc93981504"
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY not configured, create the .env w the key")
 ALGORITHM = "HS256"
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/login")

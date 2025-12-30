@@ -72,7 +72,7 @@ def user_all_orders(user: UserDep, session: SessionDep):
 
 @router.get("/orders/{order_id}", response_model=OrderwItems)
 def get_order(order_id: int, user: UserDep, session: SessionDep):
-    order = session.get(Order, id)
+    order = session.get(Order, order_id)
 
     if not order:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
