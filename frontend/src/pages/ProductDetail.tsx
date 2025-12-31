@@ -1,0 +1,1 @@
+// for the product detail
