@@ -10,7 +10,7 @@ app = FastAPI()
 # Configure CORS policy.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # LO QUE HAY QUE CAMBIAR PARA CONECTARLO CON EL FRONTEND
+    allow_origins=["https://baecommerce.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

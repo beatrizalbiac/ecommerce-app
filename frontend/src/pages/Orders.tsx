@@ -109,7 +109,7 @@ export default function Orders() {
       <div className="empty-orders">
         <h2>No orders yet</h2>
         <p>
-          You haven"t placed any orders. Start shopping to see your order history
+          You haven't placed any orders. Start shopping to see your order history
           here!
         </p>
         <Link to="/" className="btn-back">
