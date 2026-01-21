@@ -7,6 +7,7 @@ if TYPE_CHECKING:
 class OrderItemBase(SQLModel):
     order_id: int = Field(foreign_key="order.id")
     product_id: int = Field(foreign_key="product.id")
+    product_name: str
     unit_price_cents: int = Field(gt=0)
     quantity: int = Field(ge=1)
 

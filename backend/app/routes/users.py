@@ -48,9 +48,3 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], session: S
 @router.get("/auth/me", response_model=UserPublic)
 async def user(user: UserDep):
     return user
-
-# THINGS TO ADD IF THERE'S EXTRA TIME:
-
-# ERASE USER
-
-# UPDATE USER

@@ -7,8 +7,11 @@ from passlib.context import CryptContext
 from sqlmodel import Session, select
 from app.models.users import User
 from app.db import get_session
+from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

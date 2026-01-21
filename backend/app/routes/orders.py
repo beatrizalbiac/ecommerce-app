@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from app.models.orders import OrderwItems, OrderCreate, Order, Status, OrderPublic
 from app.models.order_items import OrderItem
 from app.dependencies import SessionDep, UserDep
@@ -30,6 +31,7 @@ def create_order(order: OrderCreate, session: SessionDep, user: UserDep):
 
         data.append({
             "product_id": product.id,
+            "product_name": product.title,
             "unit_price_cents": product.price_cents,
             "quantity": i.quantity
         })
@@ -63,12 +65,13 @@ def create_order(order: OrderCreate, session: SessionDep, user: UserDep):
     
     return new
 
-@router.get("/orders", response_model=list[OrderPublic])
+@router.get("/orders", response_model=list[OrderwItems])
 def user_all_orders(user: UserDep, session: SessionDep):
-    query = select(Order).where(Order.user_id == user.id).order_by(Order.created_at.desc()) # the order by is so it shows them in cronological order
-    orders = session.exec(query).all()
+    query = (
+        select(Order).where(Order.user_id == user.id).options(selectinload(Order.items)).order_by(Order.created_at.desc())
+    )
 
-    return orders
+    return session.exec(query).all()
 
 @router.get("/orders/{order_id}", response_model=OrderwItems)
 def get_order(order_id: int, user: UserDep, session: SessionDep):
