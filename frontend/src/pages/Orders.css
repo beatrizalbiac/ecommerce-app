@@ -1,0 +1,189 @@
+.orders-page {
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.orders-page h1 {
+  margin-bottom: 8px;
+}
+
+.orders-subtitle {
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 64px 32px;
+}
+
+.empty-orders h2 {
+  margin-bottom: 16px;
+}
+
+.empty-orders p {
+  margin-bottom: 32px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.order-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.order-header {
+  background: #f9f9f9;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 32px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-id {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-label {
+  color: #666;
+  font-size: 14px;
+}
+
+.order-number {
+  font-weight: 700;
+  font-size: 19px;
+  color: #333;
+}
+
+.order-date {
+  color: #666;
+  font-size: 14px;
+}
+
+.order-status {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* it will always be pending bc admins or the management for it wasn't implemented, but i still coded it as if it could change */
+
+.status-paid {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.order-items {
+  padding: 24px;
+}
+
+.order-items h3 {
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.order-item-info {
+  display: flex;
+  gap: 16px;
+  color: #666;
+}
+
+.item-quantity {
+  font-weight: 700;
+  color: #333;
+}
+
+.order-item-total {
+  font-weight: 700;
+  color: #333;
+}
+
+.order-footer {
+  padding: 24px;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+.order-total span:first-child {
+  color: #666;
+  font-weight: 600;
+}
+
+.total-amount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #27ae60;
+}
+
+@media (max-width: 768px) {
+  .orders-page {
+    padding: 16px;
+  }
+
+  .order-header {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .order-id {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .order-status {
+    align-self: flex-start;
+  }
+
+  .order-item {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .order-item-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
