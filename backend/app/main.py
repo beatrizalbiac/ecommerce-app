@@ -5,12 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .db import create_db_and_tables
 from .routes import products, users, orders, checkout
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    create_db_and_tables()
-    yield
-
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 # Configure CORS policy.
 app.add_middleware(

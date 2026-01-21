@@ -9,7 +9,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL, echo=True, pool_pre_ping=True)
 
-
 def create_db_and_tables():
     from app.models import users, products, orders, order_items
     SQLModel.metadata.create_all(engine)
