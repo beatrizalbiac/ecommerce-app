@@ -225,6 +225,10 @@
     height: 60px;
   }
 
+  .cart-item-info {
+    padding-right: 48px;
+  }
+
   .cart-item-quantity,
   .cart-item-total,
   .remove-btn {
