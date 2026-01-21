@@ -10,7 +10,11 @@ app = FastAPI()
 # Configure CORS policy.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://baecommerce.vercel.app"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://baecommerce.vercel.app",
+        "https://baecommerce.onrender.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
